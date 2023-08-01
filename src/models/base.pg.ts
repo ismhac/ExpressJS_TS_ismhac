@@ -5,7 +5,11 @@ const sequelize = new Sequelize(
     sql.development.database,
     sql.development.username,
     sql.development.password,
-    sql.development.host,
+    {
+        host: sql.development.host,
+        dialect: sql.development.dialect
+    }
+
 )
 
 export {

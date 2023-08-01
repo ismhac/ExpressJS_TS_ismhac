@@ -24,6 +24,14 @@ module.exports = {
         },
         last_name: {
           type: Sequelize.DataTypes.STRING,
+        },
+        createdAt: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false
+        },
+        updatedAt: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false
         }
       }
       )

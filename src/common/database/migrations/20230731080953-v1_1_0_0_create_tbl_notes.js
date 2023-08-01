@@ -30,6 +30,14 @@ module.exports = {
         content: {
           type: Sequelize.DataTypes.STRING
         },
+        createdat: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false
+        },
+        updatedat: {
+          type: Sequelize.DataTypes.DATE,
+          allowNull: false
+        }
       }
       )
     })
