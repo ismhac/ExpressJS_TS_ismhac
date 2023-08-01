@@ -1,19 +1,11 @@
 import { Users } from "../models"
 import { Request, Response } from "express";
-let getAllUsers = async (req: Request, res: Response) => {
-    try {
-        const result = await Users.findAll();
-        if (result) {
-            result.forEach(user => {
-                res.render('usersPage.ejs', { users: result });
-                console.log(user.dataValues);
-            })
+import { UserService } from '../services/crud/userService'
 
-        }
-        return result
-    } catch (error) {
-        console.log(error);
-    }
+const userService = new UserService();
+let getAllUsers = async (req: Request, res: Response) => {
+    let result = await userService.getAllUsers(req, res);
+    console.log(result);
 }
 
 let getFormRegister = async (req: Request, res: Response) => {
@@ -28,7 +20,7 @@ let createNewUser = async (req: Request, res: Response) => {
         // res.status(201).json(newUser)
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'An error occurred while creating the user' });
+        // res.status(500).json({ message: 'An error occurred while creating the user' });
     }
     return res.redirect('/users')
 }

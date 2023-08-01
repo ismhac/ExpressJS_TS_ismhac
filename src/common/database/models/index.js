@@ -46,4 +46,4 @@ db.Sequelize = Sequelize;
 module.exports = db;
 
 
-console.log(`>>> check path:`, __dirname);
+// console.log(`>>> check path:`, __dirname);
