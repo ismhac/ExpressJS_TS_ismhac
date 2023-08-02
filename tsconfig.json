@@ -1,19 +1,48 @@
 {
     "compilerOptions": {
-        "target": "ES6",
         "module": "commonjs",
-        "rootDir": "src",
-        "outDir": "dist",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "skipLibCheck": true
+        "target": "es6",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "removeComments": true,
+        "esModuleInterop": true, // 
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "outDir": "build",
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "node_modules/*",
+                "src/types/*"
+            ],
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true
     },
     "include": [
-        "src"
+        "src/**/*"
     ],
     "exclude": [
-        "node_modules",
-        "dist"
+        "src/common/database"
     ]
 }
+// {
+//     "compilerOptions": {
+//         "target": "ES6",
+//         "module": "commonjs",
+//         "rootDir": "./src",
+//         "outDir": "./build",
+//         "esModuleInterop": true,
+//         "forceConsistentCasingInFileNames": true,
+//         "skipLibCheck": true
+//     },
+//     "include": [
+//         "src"
+//     ],
+//     "exclude": [
+//         "node_modules",
+//         "build"
+//     ]
+// }

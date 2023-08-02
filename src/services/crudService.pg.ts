@@ -23,7 +23,7 @@ export class CrudService<T extends ModelDefined<any, any>> {
                 throw errorService.database.customError('Result not found', 404);
 
             return result;
-        } catch (error: any) {
+        } catch (error) {
             console.log('ERROR ==> ', error.message);
             if (error instanceof BaseError) throw errorService.database.customError(error.options.message, error.options.code);
             if (config.server.debug) {
@@ -55,11 +55,9 @@ export class CrudService<T extends ModelDefined<any, any>> {
         return await this.exec(this.modelWithScope(option.scope).count(option));
     }
     async create(params: any, option?: ICrudOption) {
-        if (option) {
-            return await this.exec(this.model.create(params, this.applyCreateOptions(option)));
-        }
+        return await this.exec(this.model.create(params, this.applyCreateOptions(option)));
     }
-    async update(params: any, option: ICrudOption) {
+    async update(params: any, option?: ICrudOption) {
         const item = await this.exec(this.model.findByPk(option.where.id), { allowNull: false });
         await this.exec(item.update(params));
         return await this.getItem(option);
@@ -67,7 +65,7 @@ export class CrudService<T extends ModelDefined<any, any>> {
     async delete(option?: ICrudOption) {
         return await this.exec(this.model.destroy(option), { allowNull: false });
     }
-    async deleteAll(option: ICrudOption) {
+    async deleteAll(option?: ICrudOption) {
         const t = await this.transaction();
         option.transaction = t;
         try {
@@ -97,7 +95,7 @@ export class CrudService<T extends ModelDefined<any, any>> {
     modelWithScope(scope: string[]) {
         try {
             return this.model.scope(scope);
-        } catch (err: any) {
+        } catch (err) {
             throw errorService.database.invalidScope(err.message);
         }
     }

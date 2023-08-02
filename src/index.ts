@@ -9,10 +9,9 @@ app.use(express.urlencoded({ extended: true }))
 const port = process.env.PORT || 8081
 
 configViewEngine(app)
-
 initWebRoutes(app)
-userRoutes(app);
+userRoutes(app)
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`Server running on port: ${port}, http://localhost:${port}`);
 })
