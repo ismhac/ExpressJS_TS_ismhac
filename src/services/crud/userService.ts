@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 
 import { Users } from "../../models";
 import { CrudService } from "../crudService.pg";
@@ -9,17 +10,25 @@ export class UserService extends CrudService<typeof Users>{
         super(Users)
     }
 
-    getAllUsers = async (option?: ICrudOption) => {
-        try {
-            let result = await this.model.findAll();
-            return result
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // getAllUsers = async (option?: ICrudOption) => {
+    //     try {
+    //         let result = await this.model.findAll();
+    //         return result
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     async getListUsers(option?: ICrudOption) {
         return this.getList(option);
+    }
+
+    async createNewUser(params: any, option?: ICrudOption) {
+        return this.create(params, option)
+    }
+
+    async deleteUser(params: any, option?: ICrudOption) {
+        return this.delete(option.where)
     }
 
 

@@ -9,6 +9,10 @@ const controllers_1 = require("../controllers");
 const router = express_1.default.Router();
 let userRoutes = (app) => {
     app.get('/users', (req, res) => controllers_1.userController.getResultAllUsers(req, res));
+    app.post("/create-new-user", (req, res) => controllers_1.userController.createNewUser(req, res));
+    app.post("/delete-user", (req, res) => controllers_1.userController.deleteUser(req, res));
+    app.get("/edit-user/:id", (req, res) => controllers_1.userController.getEditPage(req, res));
+    app.post("/update-user", (req, res) => controllers_1.userController.updateUser(req, res));
     return app.use('/users', router);
 };
 exports.userRoutes = userRoutes;

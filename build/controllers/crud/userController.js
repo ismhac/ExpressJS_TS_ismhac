@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const services_1 = require("../../services");
 const crudController_1 = require("../crudController");
+const models_1 = require("../../models");
 class UserController extends crudController_1.CrudController {
     constructor() {
         super(services_1.userService);
@@ -20,14 +21,7 @@ class UserController extends crudController_1.CrudController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (this && this.service) {
-                    const result = yield this.service.getListUsers();
-                    if (result) {
-                        console.log("========================================");
-                        result.rows.forEach(function (row) {
-                            console.log(row);
-                        });
-                        console.log("========================================");
-                    }
+                    const result = yield this.service.getList();
                     return res.render("usersPage.ejs", { users: result.rows });
                 }
                 else {
@@ -37,6 +31,44 @@ class UserController extends crudController_1.CrudController {
             catch (error) {
                 console.log(error);
             }
+        });
+    }
+    createNewUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newUser = req.body;
+            const transaction = yield models_1.sequelize.transaction();
+            try {
+                if (newUser) {
+                    const transaction = yield models_1.sequelize.transaction();
+                    yield this.service.create(newUser, { transaction, scope: ['defaultScope'] });
+                    yield transaction.commit();
+                    return res.redirect("/users");
+                }
+            }
+            catch (error) {
+                console.log(error);
+                yield transaction.rollback();
+            }
+        });
+    }
+    deleteUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'] });
+            return res.redirect("/users");
+        });
+    }
+    getEditPage(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let userId = req.params["id"];
+            let user = yield this.service.getItem({ where: { id: userId }, scope: ['defaultScope'] });
+            return res.render("updateUser.ejs", { dataUser: user });
+        });
+    }
+    updateUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const infoUpdateUser = req.body;
+            yield this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'] });
+            return res.redirect("/users");
         });
     }
 }

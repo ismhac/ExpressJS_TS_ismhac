@@ -6,7 +6,7 @@ const router = express.Router()
 let initWebRoutes = (app: Application) => {
 
     app.get('/', (req: Request, res: Response) => {
-        res.send(`server is running`)
+        res.render("home.ejs")
     })
     return app.use('/', router)
 }

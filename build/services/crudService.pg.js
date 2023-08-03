@@ -78,8 +78,7 @@ class CrudService {
     update(params, option) {
         return __awaiter(this, void 0, void 0, function* () {
             const item = yield this.exec(this.model.findByPk(option.where.id), { allowNull: false });
-            yield this.exec(item.update(params));
-            return yield this.getItem(option);
+            return yield this.exec(item.update(params));
         });
     }
     delete(option) {

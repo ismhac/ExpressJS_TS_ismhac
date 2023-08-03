@@ -15,19 +15,20 @@ const crudService_pg_1 = require("../crudService.pg");
 class UserService extends crudService_pg_1.CrudService {
     constructor() {
         super(models_1.Users);
-        this.getAllUsers = (option) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                let result = yield this.model.findAll();
-                return result;
-            }
-            catch (error) {
-                console.log(error);
-            }
-        });
     }
     getListUsers(option) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.getList(option);
+        });
+    }
+    createNewUser(params, option) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.create(params, option);
+        });
+    }
+    deleteUser(params, option) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.delete(option.where);
         });
     }
 }

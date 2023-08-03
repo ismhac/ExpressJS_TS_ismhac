@@ -59,8 +59,10 @@ export class CrudService<T extends ModelDefined<any, any>> {
     }
     async update(params: any, option?: ICrudOption) {
         const item = await this.exec(this.model.findByPk(option.where.id), { allowNull: false });
-        await this.exec(item.update(params));
-        return await this.getItem(option);
+        // await this.exec(item.update(params));
+        // return await this.getItem(option);
+
+        return await this.exec(item.update(params)); // modified
     }
     async delete(option?: ICrudOption) {
         return await this.exec(this.model.destroy(option), { allowNull: false });

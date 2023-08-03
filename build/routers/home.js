@@ -28,7 +28,7 @@ const express = __importStar(require("express"));
 const router = express.Router();
 let initWebRoutes = (app) => {
     app.get('/', (req, res) => {
-        res.send(`server is running`);
+        res.render("home.ejs");
     });
     return app.use('/', router);
 };
