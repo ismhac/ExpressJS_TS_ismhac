@@ -14,6 +14,7 @@ const port = process.env.PORT || 8081;
 (0, config_1.configViewEngine)(app);
 (0, routers_1.initWebRoutes)(app);
 (0, routers_1.userRoutes)(app);
+(0, routers_1.noteRouters)(app);
 app.listen(port, () => {
     console.log(`Server running on port: ${port}, http://localhost:${port}`);
 });

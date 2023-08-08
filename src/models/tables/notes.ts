@@ -15,7 +15,7 @@ export const Notes = sequelize.define(
             key: 'id'
         }
     },
-    titles: {
+    title: {
         type: DataTypes.STRING,
     },
     content: {

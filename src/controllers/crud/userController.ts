@@ -8,17 +8,13 @@ import { sequelize } from "../../models";
 export class UserController extends CrudController<typeof userService> {
     constructor() {
         super(userService)
-
     }
 
     async getResultAllUsers(req: Request, res: Response) {
         try {
-            if (this && this.service) {
-                const result = await this.service.getList()
-                return res.render("usersPage.ejs", { users: result.rows })
-            } else {
-                res.send(typeof (this))
-            }
+            const result = await this.service.getList()
+            // console.log(result);
+            return res.render("usersPage.ejs", { users: result.rows })
         } catch (error) {
             console.log(error);
         }
@@ -42,8 +38,14 @@ export class UserController extends CrudController<typeof userService> {
 
     async deleteUser(req: Request, res: Response) {
         // let { userId } = req.body
-        await this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'] })
-        return res.redirect("/users")
+        const transaction = await sequelize.transaction()
+        try {
+            await this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'] })
+            return res.redirect("/users")
+        } catch (error) {
+            console.log(error);
+            transaction.rollback()
+        }
     }
 
     async getEditPage(req: Request, res: Response) {
@@ -55,7 +57,18 @@ export class UserController extends CrudController<typeof userService> {
 
     async updateUser(req: Request, res: Response) {
         const infoUpdateUser = req.body
-        await this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'] })
-        return res.redirect("/users")
+        const transaction = await sequelize.transaction()
+        try {
+            await this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'] })
+            return res.redirect("/users")
+        } catch (error) {
+            console.log(error);
+            transaction.rollback()
+        }
+    }
+
+    async getCreateNotePage(req: Request, res: Response) {
+        let userId = req.params["id"]
+        return res.render("createNewNote.ejs", { userId: userId })
     }
 }

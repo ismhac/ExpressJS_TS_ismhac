@@ -13,7 +13,7 @@ let userRoutes = (app) => {
     app.post("/delete-user", (req, res) => controllers_1.userController.deleteUser(req, res));
     app.get("/edit-user/:id", (req, res) => controllers_1.userController.getEditPage(req, res));
     app.post("/update-user", (req, res) => controllers_1.userController.updateUser(req, res));
-    return app.use('/users', router);
+    app.use('/users', router);
 };
 exports.userRoutes = userRoutes;
 //# sourceMappingURL=user.js.map

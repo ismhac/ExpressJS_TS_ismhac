@@ -19,17 +19,17 @@ export class UserService extends CrudService<typeof Users>{
     //     }
     // }
 
-    async getListUsers(option?: ICrudOption) {
-        return this.getList(option);
-    }
+    // async getListUsers(option?: ICrudOption) {
+    //     return this.getList(option);
+    // }
 
-    async createNewUser(params: any, option?: ICrudOption) {
-        return this.create(params, option)
-    }
+    // async createNewUser(params: any, option?: ICrudOption) {
+    //     return this.create(params, option)
+    // }
 
-    async deleteUser(params: any, option?: ICrudOption) {
-        return this.delete(option.where)
-    }
+    // async deleteUser(params: any, option?: ICrudOption) {
+    //     return this.delete(option.where)
+    // }
 
 
 }

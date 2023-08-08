@@ -22,6 +22,7 @@ class UserController extends crudController_1.CrudController {
             try {
                 if (this && this.service) {
                     const result = yield this.service.getList();
+                    console.log(result);
                     return res.render("usersPage.ejs", { users: result.rows });
                 }
                 else {

@@ -16,7 +16,7 @@ exports.Notes = base_1.sequelize.define('tbl_notes', {
             key: 'id'
         }
     },
-    titles: {
+    title: {
         type: sequelize_1.DataTypes.STRING,
     },
     content: {
