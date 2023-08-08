@@ -2,6 +2,7 @@ import { userService } from "../../services";
 import { CrudController } from "../crudController";
 import { Request, Response } from "express"
 import { sequelize } from "../../models";
+import { noteService } from "../../services";
 
 
 
@@ -40,7 +41,9 @@ export class UserController extends CrudController<typeof userService> {
         // let { userId } = req.body
         const transaction = await sequelize.transaction()
         try {
-            await this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'] })
+            await noteService.deleteAll({ where: { user_id: req.body["userId"] }, scope: ['defaultScope'] })
+            await this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'], transaction })
+            await transaction.commit()
             return res.redirect("/users")
         } catch (error) {
             console.log(error);
@@ -59,7 +62,8 @@ export class UserController extends CrudController<typeof userService> {
         const infoUpdateUser = req.body
         const transaction = await sequelize.transaction()
         try {
-            await this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'] })
+            await this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'], transaction })
+            await transaction.commit()
             return res.redirect("/users")
         } catch (error) {
             console.log(error);
