@@ -44,22 +44,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col" class="text-center">ID</th>
                 <th scope="col" class="text-center">First name</th>
                 <th scope="col" class="text-center">Last name</th>
+                <th scope="col" class="text-center">total number of notes</th>
             </tr>
         </thead>
         <tbody>
             <% users.forEach(function(user) { %>
                 <tr>
                     <td class="text-center">
-                        <%= user.id %>
-                    </td>
-                    <td class="text-center">
                         <%= user.first_name %>
                     </td>
                     <td class="text-center">
-                        <%= user.last_name %>
+                        <%= user.last_name%>
+                    </td>
+                    <td class="text-center">
+                        <%= user.n_notes %>
                     </td>
                     <td class="text-center">
                         <form action="/users/<%= user.id %>/notes" method="GET">

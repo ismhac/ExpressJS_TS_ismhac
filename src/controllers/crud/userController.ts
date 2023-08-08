@@ -11,11 +11,21 @@ export class UserController extends CrudController<typeof userService> {
         super(userService)
     }
 
+    // async getResultAllUsers(req: Request, res: Response) {
+    //     try {
+    //         const result = await this.service.getList()
+    //         // console.log(result);
+    //         return res.render("usersPage.ejs", { users: result.rows })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
     async getResultAllUsers(req: Request, res: Response) {
         try {
-            const result = await this.service.getList()
+            const result = await this.service.getInfoUserAndNumberofNote()
             // console.log(result);
-            return res.render("usersPage.ejs", { users: result.rows })
+            return res.render("usersPage.ejs", { users: result })
         } catch (error) {
             console.log(error);
         }

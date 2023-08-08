@@ -18,4 +18,6 @@ export class NoteService extends CrudService<typeof Notes>{
         })
         return listNotes
     }
+
+
 }
