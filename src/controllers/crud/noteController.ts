@@ -10,8 +10,9 @@ export class NoteController extends CrudController<typeof noteService>{
 
     async getListNotes(req: Request, res: Response) {
         try {
-            const listNotes = await this.service.getList()
-            return res.render("notesPage.ejs", { notes: listNotes.rows })
+            const listNotes = await this.service.getListNotes()
+            console.log(listNotes);
+            return res.render("notesPage.ejs", { notes: listNotes })
         } catch (error) {
             console.log(error);
         }
@@ -21,7 +22,7 @@ export class NoteController extends CrudController<typeof noteService>{
         try {
             const user_id = req.params["user_id"]
             const listNotes = await this.service.getListNotesByUserId({ user_id: user_id })
-            // console.log(listNotes);
+            console.log(listNotes);
             res.render("noteOfUser.ejs", { notes: listNotes })
         } catch (error) {
             console.log(error);

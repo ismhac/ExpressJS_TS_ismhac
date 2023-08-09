@@ -18,14 +18,14 @@ class NoteService extends crudService_pg_1.CrudService {
     }
     getListNotesByUserId(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield models_1.Notes.findAll({
+            let listNotes = yield this.model.findAll({
                 where: {
                     user_id: params.user_id
                 },
                 attributes: ["id", "user_id", "title", "content"],
                 raw: true
             });
-            return result;
+            return listNotes;
         });
     }
 }

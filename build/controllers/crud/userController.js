@@ -13,6 +13,7 @@ exports.UserController = void 0;
 const services_1 = require("../../services");
 const crudController_1 = require("../crudController");
 const models_1 = require("../../models");
+const services_2 = require("../../services");
 class UserController extends crudController_1.CrudController {
     constructor() {
         super(services_1.userService);
@@ -20,14 +21,8 @@ class UserController extends crudController_1.CrudController {
     getResultAllUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                if (this && this.service) {
-                    const result = yield this.service.getList();
-                    console.log(result);
-                    return res.render("usersPage.ejs", { users: result.rows });
-                }
-                else {
-                    res.send(typeof (this));
-                }
+                const result = yield this.service.getInfoUserAndNumberofNote();
+                return res.render("usersPage.ejs", { users: result });
             }
             catch (error) {
                 console.log(error);
@@ -54,8 +49,17 @@ class UserController extends crudController_1.CrudController {
     }
     deleteUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'] });
-            return res.redirect("/users");
+            const transaction = yield models_1.sequelize.transaction();
+            try {
+                yield services_2.noteService.deleteAll({ where: { user_id: req.body["userId"] }, scope: ['defaultScope'] });
+                yield this.service.delete({ where: { id: req.body["userId"] }, scope: ['defaultScope'], transaction });
+                yield transaction.commit();
+                return res.redirect("/users");
+            }
+            catch (error) {
+                console.log(error);
+                transaction.rollback();
+            }
         });
     }
     getEditPage(req, res) {
@@ -68,8 +72,22 @@ class UserController extends crudController_1.CrudController {
     updateUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const infoUpdateUser = req.body;
-            yield this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'] });
-            return res.redirect("/users");
+            const transaction = yield models_1.sequelize.transaction();
+            try {
+                yield this.service.update(infoUpdateUser, { where: { id: infoUpdateUser.id }, scope: ['defaultScope'], transaction });
+                yield transaction.commit();
+                return res.redirect("/users");
+            }
+            catch (error) {
+                console.log(error);
+                transaction.rollback();
+            }
+        });
+    }
+    getCreateNotePage(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let userId = req.params["id"];
+            return res.render("createNewNote.ejs", { userId: userId });
         });
     }
 }

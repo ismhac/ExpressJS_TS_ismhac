@@ -10,6 +10,6 @@ const errorService = new errorService_1.ErrorService();
 exports.errorService = errorService;
 const userService = new userService_1.UserService();
 exports.userService = userService;
-const noteService = new noteService_1.NoteService;
+const noteService = new noteService_1.NoteService();
 exports.noteService = noteService;
 //# sourceMappingURL=index.js.map
